@@ -1,0 +1,45 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background: url(../static/gym.gif);
+    background-repeat:no-repeat;
+    background-size: cover;
+    /* background: #1E1E1E; */
+    /* color: #ffffff; */
+    color: white;
+    height: 100vh;
+    display:grid;
+    place-content: center;
+}
+
+.container{
+    background: #1E1E1E;
+    box-shadow: 
+    12px 12px 16px 0 rgba(0, 0, 0, 0.25),
+    /* -8px -8px 12px 0 rgba(100, 100, 100, 0.3); */
+    -8px -8px 12px 0 rgba(0, 0, 0, 0.25);
+
+    margin: 0 auto;
+    /* width: 50vw; */
+    /* width: 90vw; */
+    border-radius: 25px;
+    padding: 50px;
+    padding-top:20px;
+    text-align: center;
+    padding-bottom:30px;
+}
+/* .container{
+
+    text-align:center;
+} */
+.btn{
+    border: none;
+    /* background-color: #b8915a; */
+} 
+
+form {
+    display: inline;
+}
