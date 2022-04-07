@@ -8,9 +8,11 @@ import hashlib
 from datetime import date
 import collections
 # https://docs.python.org/3/library/sqlite3.html
+from os import path
 
+ROOT = path.dirname(path.realpath(__file__))
 
-db = "storage.db"
+db = path.join(ROOT,"storage.db")
 
 app = Flask(__name__)
 
@@ -287,5 +289,6 @@ if __name__ == '__main__':
     # createUserMax()
     # testUserMax()
     # app.run(host="localhost", debug=True)
-    app.run(host="10.80.178.102", debug=True)
+    # app.run(host="10.80.178.102", debug=True)
     # app.run(host="10.80.178.102")
+    app.run(host="0.0.0.0")
