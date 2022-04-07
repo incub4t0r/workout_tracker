@@ -12,8 +12,9 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-bottom" role="navigation">
         <div class="container">
+            <!-- <a class="navbar-brand">💪</a> -->
             <div class="navbar-header navbar-text">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#bs-example-navbar-collapse-1">
@@ -25,8 +26,8 @@
             </div>
             <div class="collapse navbar-collapse navbar-text-color" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a class="first" href={{url_for('home')}}>Home</a></li>
-                    <li><a href={{url_for('leaderboard')}}>Leaderboard</a></li>
+                    <li><a class="first" href={{url_for('home')}}>Home 🏋️</a></li>
+                    <li><a href={{url_for('leaderboard')}}>Leaderboard 📌</a></li>
                     <li><a href={{url_for('logout')}}>Logout</a></li>
                 </ul>
             </div>
@@ -49,6 +50,9 @@
         </div>
     </div> -->
     {% block content %}{% endblock %}
+    <br>
+    <br>
+    <br>
 </body>
 
 </html>

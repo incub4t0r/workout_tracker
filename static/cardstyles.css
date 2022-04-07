@@ -99,6 +99,9 @@ form {
     *{
         transition: ease 1s;
     }
+    .navbar-header{
+        margin: 4px;
+    }
     /* .navbar-text-color .nav li a{
         color: var(--white);
     }
@@ -123,6 +126,9 @@ form {
     *{
         transition: ease-in 1s;
     }
+    /* .navbar-brand{
+        font-size: 40px;
+    } */
     .navbar-text-color .nav li a{
         color: var(--white);
     }
