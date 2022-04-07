@@ -1,0 +1,169 @@
+:root{
+    --white: #F9F9F9;
+    --primary: #121212;
+    --secondary: #1E1E1E;
+}
+
+body{
+    background: var(--primary);
+    /* color: #FFF; */
+    color: var(--white);
+}
+
+.header {
+    background: #090909; 
+    padding:16px;
+    box-shadow: 0 8px 8px -4px #010101;
+}
+
+.header .container *{
+    display: inline;
+}
+
+.header .container button{
+    float:right;
+    margin-left: 10px;
+}
+
+.container button {
+    transition: ease 0.5s;
+    background:rgba(0, 0, 0, 0.5);
+    color: var(--white);
+    font-size:16px;
+}
+
+.container button:hover{
+    transition: ease 0.5s;
+    background:rgba(255, 255, 255);
+}
+
+.container input{
+    background:rgba(0, 0, 0, 0.5);
+    color: var(--white);
+    font-size: 16px;
+}
+
+form {
+    display: inline;
+}
+
+/* Float four columns side by side */
+.row .column {
+    float: left;
+    width: 25%;
+    padding: 0 10px;
+}
+
+/* Style the counter cards */
+.row .column .card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    padding: 16px;
+    padding-bottom: 40px;
+    text-align: center;
+    /* background-color: #f1f1f1; */
+    background: var(--secondary);
+    border-radius: 15px;
+}
+
+.row .column .card p {
+    font-size: 5vw;
+}
+
+.row .column .card li {
+    font-size: 18px;
+    /* margin-left: 1vw; */
+    text-align: left;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+    .row .column {
+        width: 100%;
+        display: block;
+        margin-bottom: 20px;
+    }
+
+    .row .column .card p {
+        font-size: 20vw;
+    }
+
+    .row .column .card li {
+        /* margin-left: 10vw; */
+        text-align: left;
+    }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+/* 
+:root{
+    --fadeTime: 4s;
+}
+
+.fade-in-text {
+    color: black;
+    animation: fadeIn linear var(--fadeTime);
+    -webkit-animation: fadeIn linear var(--fadeTime);
+    -moz-animation: fadeIn linear var(--fadeTime);
+    -o-animation: fadeIn linear var(--fadeTime);
+    -ms-animation: fadeIn linear var(--fadeTime);
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-o-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-ms-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+} */

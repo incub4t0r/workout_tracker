@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/cardstyles.css">
+    <title>Leaderboard</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <h2>
+                Leaderboard
+            </h2>
+            <form action="/logout">
+                <button id="register-button" type="submit" class="btn btn-default">Logout</button>
+            </form>
+            <form action="/home" method="GET">
+                <button id="submit-button" type="submit" class="btn btn-default">Back Home</button>
+            </form>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="column">
+                <div class="card">
+                    <h2>
+                        <strong>
+                            Squat
+                        </strong>
+                    </h2>
+                    <br>
+                    <ol>
+                        {% for key, value in boardsSorted[0].items() %}
+                        <li>
+                            {{key}} at {{value}} lbs
+                        </li>
+                        {%endfor%}
+                    </ol>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card">
+                    <h2>
+                        <strong>
+                            Bench
+                        </strong>
+                    </h2>
+                    <br>
+                    <ol>
+                        {% for key, value in boardsSorted[1].items() %}
+                        <li>
+                            {{key}} at {{value}} lbs
+                        </li>
+                        {%endfor%}
+                    </ol>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card">
+                    <h2>
+                        <strong>
+                            Overhead
+                        </strong>
+                    </h2>
+                    <br>
+                    <ol>
+                        {% for key, value in boardsSorted[2].items() %}
+                        <li>
+                            {{key}} at {{value}} lbs
+                        </li>
+                        {%endfor%}
+                    </ol>
+                </div>
+            </div>
+            <div class="column">
+                <div class="card">
+                    <h2>
+                        <strong>
+                            Deadlift
+                        </strong>
+                    </h2>
+                    <br>
+                    <ol>
+                        {% for key, value in boardsSorted[3].items() %}
+                        <li>
+                            {{key}} at {{value}} lbs
+                        </li>
+                        {%endfor%}
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <!-- <form action="/home" method="GET">
+            <button id="submit-button" type="submit" class="btn btn-default">Back Home</button>
+        </form> -->
+        <!-- <form action="/logout" method="GET">
+            <button id="register-button" type="submit" class="btn btn-default">Logout</button>
+        </form> -->
+    </div>
+    <br>
+    <br>
+</body>
+
+</html>

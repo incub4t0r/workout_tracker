@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../static/cardstyles.css">
+    <title>Home</title>
+</head>
+
+<body>
+    <div class="header">
+        <div class="container">
+            <h2>
+                Home
+            </h2>
+            <form action="/logout">
+                <button type="submit" class="btn btn-default">Logout</button>
+            </form>
+            <form action="/leaderboard">
+                <button type="submit" class="btn btn-default">Leaderboard</button>
+            </form>
+        </div>
+    </div>
+    <div class="container">
+        <h1>
+            Welcome, {{name}}.
+        </h1>
+        <!-- <h2>
+            Your max weights as of {{date}}:
+        </h2> -->
+        <br>
+        <div class="row">
+            {% for key, value in maxes.items() %}
+            <div class="column">
+                <div class="card">
+                    <h3>{{key}}</h3>
+                    <p class="fade-in-text">
+                        {{value}}
+                    </p>
+                    <form action="/update/{{key}}" method="POST">
+                        <div class="form-group">
+                            <input type="number" name="weight" pattern="[0-9]" class="form-control"
+                                placeholder="Enter max" required min="1" max="1000">
+                        </div>
+                        <button type="submit" class="btn btn-default">Update</button>
+                    </form>
+                </div>
+            </div>
+            {%endfor%}
+        </div>
+        <br>
+        <br>
+        <!-- <form action="/updatemax" method="GET">
+            <button id="register-button" type="submit" class="btn btn-default">Update max</button>
+        </form> -->
+        <!-- <form action="/leaderboard">
+            <button type="submit" class="btn btn-default">Leaderboard</button>
+        </form> -->
+        
+    </div>
+    <br>
+</body>
+
+</html>
