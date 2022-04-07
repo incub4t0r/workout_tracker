@@ -84,6 +84,7 @@ form {
     /* background-color: #f1f1f1; */
     background: var(--secondary);
     border-radius: 15px;
+    margin-bottom: 20px;
 }
 
 .row .column .card p {
@@ -95,12 +96,18 @@ form {
     /* margin-left: 1vw; */
     text-align: left;
 }
+
+
+
 @media screen and (max-width: 800px) {
     *{
         transition: ease 1s;
     }
     .navbar-header{
         margin: 4px;
+    }
+    .nav .first {
+        padding-left: 15px;
     }
     /* .navbar-text-color .nav li a{
         color: var(--white);
@@ -109,7 +116,7 @@ form {
     .row .column {
         width: 50%;
         display: block;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     .row .column .card p {
@@ -138,7 +145,7 @@ form {
     .row .column {
         width: 100%;
         display: block;
-        margin-bottom: 20px;
+        margin-bottom: 0px;
     }
 
     .row .column .card p {

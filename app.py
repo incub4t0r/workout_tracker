@@ -2,11 +2,13 @@
 
 # https://docs.python.org/3/library/sqlite3.html
 
+from flask import jsonify
 from flask import Flask, render_template, request, redirect, session, send_from_directory, make_response
 import sqlite3
 import hashlib
 from datetime import date
 from os import path
+import math
 # from testsuite import *
 
 ROOT = path.dirname(path.realpath(__file__))
@@ -89,6 +91,11 @@ def genBoards():
     conn = sqlite3.connect(db)
     c = conn.cursor()
     results = c.execute("SELECT * FROM usersmax").fetchall()
+    squatRes = {}
+    benchRes = {}
+    deadliftRes = {}
+    overheadRes = {}
+
     squatBoard = {}
     benchBoard = {}
     overheadBoard = {}
@@ -96,13 +103,18 @@ def genBoards():
     boards = [squatBoard, benchBoard, deadliftBoard, overheadBoard]
     boardsSorted = []
     for i in range(0, len(results)):
-        squatBoard[results[i][0]] = results[i][1]
-        benchBoard[results[i][0]] = results[i][2]
-        deadliftBoard[results[i][0]] = results[i][3]
-        overheadBoard[results[i][0]] = results[i][4]
+        squatRes[results[i][0]] = results[i][1]
+        benchRes[results[i][0]] = results[i][2]
+        deadliftRes[results[i][0]] = results[i][3]
+        overheadRes[results[i][0]] = results[i][4]
+    squatBoard["squat"] = squatRes
+    benchBoard["bench"] = benchRes
+    deadliftBoard["deadlift"] = deadliftRes
+    overheadBoard["overhead"] = overheadRes
     for board in boards:
         boardsSorted.append(
             dict(sorted(board.items(), key=lambda x: x[1], reverse=True)))
+    print(boardsSorted)
     return boardsSorted
 
 
@@ -188,6 +200,13 @@ def leaderboard():
         return render_template('leaderboard.html', boardsSorted=boardsSorted)
 
 
+@app.route('/public/leaderboard', methods=["GET"])
+def publicLeaderboard():
+    boardsSorted = genBoards()
+    return jsonify(leaderboard=boardsSorted)
+    # return temp
+
+
 @app.route('/update/<string:workout>', methods=['GET', 'POST'])
 def update(workout):
     if not 'username' in session:
@@ -207,6 +226,41 @@ def update(workout):
                     return render_template('updatemax.html', error="weight was somehow not a digit.")
             else:
                 return render_template('updatemax.html', error="workout was somehow not accepted.")
+
+
+def calcPlates(weight):
+    results = {}
+    perSide = (weight-45)/2
+    num45 = math.floor(perSide / 45)
+    num25 = math.floor((perSide - (num45*45))/25)
+    num10 = math.floor((perSide - (num45*45) - (num25*25))/10)
+    num5 = math.floor((perSide - (num45*45) - (num25*25) - (num10*10))/5)
+    num2_5 = math.floor(
+        (perSide - (num45*45) - (num25*25) - (num10*10) - (num5*5))/2.5)
+    results['45'] = num45
+    results['25'] = num25
+    results['10'] = num10
+    results['5'] = num5
+    results['2.5'] = num2_5
+    totalWeight = (num45*45 + num25*25 + num10*10 + num5*5 + num2_5*2.5)*2 + 45
+    return (results, totalWeight)
+
+
+@app.route('/calculator', methods=['GET', 'POST'])
+def calculator():
+    if not 'username' in session:
+        return redirect("/login", 303)
+    else:
+        if request.method == 'GET':
+            return render_template('calculator.html')
+        elif request.method == 'POST':
+            results = {}
+            totalWeight = float(request.form.get("weight"))
+            if totalWeight < 45.0:
+                return render_template('calculator.html', error="Do the math yourself")
+            else:
+                results = calcPlates(totalWeight)
+                return render_template('calculator.html', data=results[0], weight=results[1])
 
 
 @app.route('/logout')

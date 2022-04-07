@@ -10,78 +10,26 @@
     </h1>
     <br>
     <div class="row">
-        <div class="column">
-            <div class="card">
-                <h2>
-                    <strong>
-                        Squat
-                    </strong>
-                </h2>
-                <br>
-                <ol>
-                    {% for key, value in boardsSorted[0].items() %}
-                    <li>
-                        {{key}} @ {{value}} lbs.
-                    </li>
-                    {%endfor%}
-                </ol>
-            </div>
-        </div>
-        <div class="column">
-            <div class="card">
-                <h2>
-                    <strong>
-                        Bench
-                    </strong>
-                </h2>
-                <br>
-                <ol>
-                    {% for key, value in boardsSorted[1].items() %}
-                    <li>
-                        {{key}} @ {{value}} lbs.
-                    </li>
-                    {%endfor%}
-                </ol>
-            </div>
-        </div>
-        <div class="column">
-            <div class="card">
-                <h2>
-                    <strong>
-                        Overhead
-                    </strong>
-                </h2>
-                <br>
-                <ol>
-                    {% for key, value in boardsSorted[2].items() %}
-                    <li>
-                        {{key}} @ {{value}} lbs.
-                    </li>
-                    {%endfor%}
-                </ol>
-            </div>
-        </div>
-        <div class="column">
-            <div class="card">
-                <h2>
-                    <strong>
-                        Deadlift
-                    </strong>
-                </h2>
-                <br>
-                <ol>
-                    {% for key, value in boardsSorted[3].items() %}
-                    <li>
-                        {{key}} @ {{value}} lbs.
-                    </li>
-                    {%endfor%}
-                </ol>
-            </div>
-        </div>
+        {% for board in range(0, boardsSorted|length)%}
+            {% for key, value in boardsSorted[board].items()%}
+                <div class="column">
+                    <div class="card">
+                        <h2>
+                            <strong>
+                                {{key}}
+                            </strong>
+                        </h2>
+                        <br>
+                        <ol>
+                            {% for k,v in value.items()%}
+                            <li>
+                                {{k}} @ {{v}}
+                            </li>
+                            {%endfor%}
+                        </ol>
+                    </div>
+                </div>
+            {%endfor%}
+        {%endfor%}
     </div>
-</div>
-<br>
-<br>
 {% endblock %}
-
-</html>
