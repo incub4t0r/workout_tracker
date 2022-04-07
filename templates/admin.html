@@ -1,0 +1,29 @@
+{% extends 'pagebase.html' %}
+
+{% block title %} Admin {% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1> 
+        Welcome, {{name}} 
+    </h1>
+    <br>
+    <h1>
+        Submit queries
+    </h1>
+    <form action="/admin" method="POST">
+        <input class="form-control" name="query" placeholder="Enter query">
+        <br>
+        <button id="submit-button" type="submit" class="btn btn-default">Query</button>
+    </form>
+    <br>
+    <br>
+    {%if result is defined %}
+        {%for elem in result %}
+        <p>{{elem}}</p>
+        {%endfor%}
+    {%elif error is defined %}
+        <p>error</p>
+    {%endif%}
+</div>
+{% endblock %}

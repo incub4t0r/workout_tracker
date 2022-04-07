@@ -18,6 +18,7 @@ app = Flask(__name__)
 with open(path.join(ROOT, "secrets.txt"), 'r') as f:
     s = f.readlines()
 app.secret_key = s[0].replace('\n', '')
+
 app.config.update(SESSION_COOKIE_HTTPONLY=False)
 
 acceptedWorkouts = ["squat", "bench", "overhead", "deadlift"]
@@ -76,18 +77,17 @@ def createNewUser(username, hashpass):
 
 
 def updateMax(workout, weight, username):
-    # def updateMax():
     conn = sqlite3.connect(db)
     c = conn.cursor()
     updateQuery = (
         f"UPDATE usersmax SET '{workout}' = '{weight}' WHERE username = '{username}'")
-    # c.execute("UPDATE usersmax SET :workout = :weight WHERE username = :username", {"workout":workout, "weight":weight, "username":username})
-    # c.execute("UPDATE usersmax SET squat = ? WHERE username = ?", (weight, username))
     c.execute(updateQuery)
     conn.commit()
 
+
 def sortBoard(board):
     return dict(sorted(board.items(), key=lambda x: x[1], reverse=True))
+
 
 def genBoards():
     conn = sqlite3.connect(db)
@@ -97,7 +97,6 @@ def genBoards():
     benchRes = {}
     deadliftRes = {}
     overheadRes = {}
-
     squatBoard = {}
     benchBoard = {}
     overheadBoard = {}
@@ -133,11 +132,15 @@ def login():
         try:
             conn = sqlite3.connect(db)
             c = conn.cursor()
-            c.execute("SELECT * FROM users WHERE username=:username AND password=:password",
-                      {"username": username, "password": hashpass})
-            rval = c.fetchone()
-            if rval:
-                session['username'] = rval
+            result = c.execute("SELECT * FROM users WHERE username=:username AND password=:password",
+                      {"username": username, "password": hashpass}).fetchone()
+            if result:
+                session['username'] = result
+                # is this secure?
+                if result[0] == 'admin':
+                    session['admin'] = 1
+                else:
+                    session['admin'] = 0
                 return redirect("/home", 303)
             else:
                 return redirect("/login", 303)
@@ -174,18 +177,39 @@ def register():
             return render_template('register.html', error="error creating a new user, contact admin.")
         return redirect('/home')
 
+@app.route('/admin', methods=['GET', 'POST'])
+def admin():
+    if not 'admin' in session['username'] or session['admin'] != 1:
+        return redirect('/home', 303)
+    else:
+        if request.method == 'GET':
+            return render_template('admin.html', name=session['username'][0])
+        elif request.method == 'POST':
+            conn = sqlite3.connect(db)
+            c = conn.cursor()
+            QUERY = request.form.get('query')
+            try:
+                result = c.execute(QUERY).fetchall()
+                print("success")
+                return render_template('admin.html', name=session['username'][0], result=result)
+            except:
+                return render_template('admin.html', name=session['username'][0], error="error")
+
 
 @app.route('/home', methods=['GET'])
 def home():
     if not 'username' in session:
         return redirect("/login", 303)
     else:
-        today = date.today()
-        todayDate = today.strftime("%B %d, %Y")
-        username = session['username'][0]
-        maxes = getUserMax(username)
-        print(f"username: {session['username'][0]}")
-        return render_template('home.html', name=session['username'][0], maxes=maxes, date=todayDate)
+        # is this secure?
+        if session['admin'] == 1:
+            return redirect('/admin', 303)
+            # render_template('admin.html', name=session['username'][0])
+        else:
+            username = session['username'][0]
+            maxes = getUserMax(username)
+            print(f"username: {session['username'][0]}")
+            return render_template('home.html', name=session['username'][0], maxes=maxes)
 
 
 @app.route('/leaderboard', methods=['GET'])
