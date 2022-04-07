@@ -3,6 +3,11 @@
     --primary: #121212;
     --secondary: #1E1E1E;
 }
+/* 
+*{
+    margin: 0;
+    padding: 0;
+} */
 
 body{
     background: var(--primary);
@@ -11,13 +16,15 @@ body{
 }
 
 .header {
-    background: #090909; 
+    /* background: #090909;  */
+    background: var(--secondary);
     padding:16px;
     box-shadow: 0 8px 8px -4px #010101;
 }
 
 .header .container *{
     display: inline;
+    text-align: center;
 }
 
 .header .container button{
@@ -47,6 +54,20 @@ form {
     display: inline;
 }
 
+/* Style for navbar */
+.nav {
+    font-size:20px;
+    /* color: var(--white); */
+}
+
+.nav .first {
+    padding-left: 0px;
+}
+
+/* .navbar-text-color .nav li a{
+    color: var(--white);
+} */
+
 /* Float four columns side by side */
 .row .column {
     float: left;
@@ -74,9 +95,40 @@ form {
     /* margin-left: 1vw; */
     text-align: left;
 }
+@media screen and (max-width: 800px) {
+    *{
+        transition: ease 1s;
+    }
+    /* .navbar-text-color .nav li a{
+        color: var(--white);
+    }
+     */
+    .row .column {
+        width: 50%;
+        display: block;
+        margin-bottom: 20px;
+    }
 
+    .row .column .card p {
+        font-size: 20vw;
+    }
+
+    .row .column .card li {
+        /* margin-left: 10vw; */
+        text-align: left;
+    }
+}
 /* Responsive columns */
 @media screen and (max-width: 600px) {
+    *{
+        transition: ease-in 1s;
+    }
+    .navbar-text-color .nav li a{
+        color: var(--white);
+    }
+    .nav .first {
+        padding-left: 15px;
+    }
     .row .column {
         width: 100%;
         display: block;
@@ -92,6 +144,8 @@ form {
         text-align: left;
     }
 }
+
+
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

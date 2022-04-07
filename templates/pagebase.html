@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../static/cardstyles.css">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-static-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header navbar-text">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse navbar-text-color" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a class="first" href={{url_for('home')}}>Home</a></li>
+                    <li><a href={{url_for('leaderboard')}}>Leaderboard</a></li>
+                    <li><a href={{url_for('logout')}}>Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- <div class="header">
+        <div class="container">
+            <h2>
+                {{self.title()}}
+            </h2>
+            <form action="/logout">
+                <button type="submit" class="btn btn-default">Logout</button>
+            </form>
+            <form action="/leaderboard">
+                <button type="submit" class="btn btn-default">Leaderboard</button>
+            </form>
+            <form action="/home">
+                <button type="submit" class="btn btn-default">Home</button>
+            </form>
+        </div>
+    </div> -->
+    {% block content %}{% endblock %}
+</body>
+
+</html>

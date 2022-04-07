@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 
-from typing import OrderedDict
 from flask import Flask, render_template, request, redirect, session, send_from_directory, make_response
 import sqlite3
-import os
 import hashlib
 from datetime import date
-import collections
 # https://docs.python.org/3/library/sqlite3.html
 from os import path
 
@@ -16,15 +13,16 @@ db = path.join(ROOT,"storage.db")
 
 app = Flask(__name__)
 
-file_location = os.path.realpath(os.path.join(
-    os.getcwd(), os.path.dirname(__file__)))
+with open(path.join(ROOT,"secrets.txt"), 'r') as f:
+    s = f.readlines()
+
+app.secret_key = s[0].replace('\n', '')
+app.config.update(SESSION_COOKIE_HTTPONLY=False)
 
 acceptedWorkouts = ["squat", "bench", "overhead", "deadlift"]
 
-
 def hash(data):
     return hashlib.sha224(data.replace('\n', '').encode('ascii')).hexdigest()
-
 
 # def createTable():
 #     adminpass = hash("supersecret")
@@ -139,7 +137,7 @@ def login():
             return render_template('login.html', error="username or password cannot be empty!")
         hashpass = hash(password)
         try:
-            conn = sqlite3.connect('storage.db')
+            conn = sqlite3.connect(db)
             c = conn.cursor()
             c.execute("SELECT * FROM users WHERE username=:username AND password=:password",
                       {"username": username, "password": hashpass})
@@ -188,7 +186,7 @@ def register():
         return redirect('/home')
 
 @app.route('/home', methods=['GET'])
-def main():
+def home():
     if not 'username' in session:
         return redirect("/login", 303)
     else:
@@ -212,13 +210,13 @@ def genBoards():
     overheadBoard = {}
     deadliftBoard = {}
 
-    boards = [squatBoard, benchBoard, overheadBoard, deadliftBoard]
+    boards = [squatBoard, benchBoard, deadliftBoard, overheadBoard]
     boardsSorted = []
-    for i in range(0, len(results)): 
+    for i in range(0, len(results)):
         squatBoard[results[i][0]] = results[i][1]
         benchBoard[results[i][0]] = results[i][2]
-        overheadBoard[results[i][0]] = results[i][3]
-        deadliftBoard[results[i][0]] = results[i][4]
+        deadliftBoard[results[i][0]] = results[i][3]
+        overheadBoard[results[i][0]] = results[i][4]
     for board in boards:
         boardsSorted.append(dict(sorted(board.items(), key=lambda x:x[1], reverse=True)))
     return boardsSorted
@@ -228,10 +226,10 @@ def leaderboard():
     if not 'username' in session:
         return redirect("/login", 303)
     else:
-        
+
         # parse results then send to html
         # username = session['username'][0]
-        
+
         # print(boardsSorted)
         # squatBoardSorted = sorted(squatBoard.items(), key=lambda x:x[1], reverse=True)
         # squatBoardSorted = dict(squatBoardSorted)
@@ -277,18 +275,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    try:
-        os.remove(db)
-    except OSError:
-        pass
-    with open(os.path.join(file_location, "secrets.txt"), 'r') as f:
-        s = f.readlines()
-    app.secret_key = s[0].replace('\n', '')
-    app.config.update(SESSION_COOKIE_HTTPONLY=False)
-    # createTable()
-    # createUserMax()
-    # testUserMax()
-    # app.run(host="localhost", debug=True)
-    # app.run(host="10.80.178.102", debug=True)
-    # app.run(host="10.80.178.102")
-    app.run(host="0.0.0.0")
+    app.run(host="0.0.0.0", debug=True)
