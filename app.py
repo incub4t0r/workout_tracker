@@ -86,6 +86,8 @@ def updateMax(workout, weight, username):
     c.execute(updateQuery)
     conn.commit()
 
+def sortBoard(board):
+    return dict(sorted(board.items(), key=lambda x: x[1], reverse=True))
 
 def genBoards():
     conn = sqlite3.connect(db)
@@ -101,21 +103,16 @@ def genBoards():
     overheadBoard = {}
     deadliftBoard = {}
     boards = [squatBoard, benchBoard, deadliftBoard, overheadBoard]
-    boardsSorted = []
     for i in range(0, len(results)):
         squatRes[results[i][0]] = results[i][1]
         benchRes[results[i][0]] = results[i][2]
         deadliftRes[results[i][0]] = results[i][3]
         overheadRes[results[i][0]] = results[i][4]
-    squatBoard["squat"] = squatRes
-    benchBoard["bench"] = benchRes
-    deadliftBoard["deadlift"] = deadliftRes
-    overheadBoard["overhead"] = overheadRes
-    for board in boards:
-        boardsSorted.append(
-            dict(sorted(board.items(), key=lambda x: x[1], reverse=True)))
-    print(boardsSorted)
-    return boardsSorted
+    squatBoard["squat"] = sortBoard(squatRes)
+    benchBoard["bench"] = sortBoard(benchRes)
+    deadliftBoard["deadlift"] = sortBoard(deadliftRes)
+    overheadBoard["overhead"] = sortBoard(overheadRes)
+    return boards
 
 
 @app.route('/', methods=['GET'])
